@@ -70,3 +70,4 @@ More information about the usage of this directory in [the documentation](https:
 # nuxt_hortifruti_nagumo
 # nuxtjs_nagumo_hortifruti
 # nuxtjs_nagumo_hortifruti
+# nuxtjs_nagumo_hortifruti
