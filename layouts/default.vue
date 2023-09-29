@@ -1,19 +1,22 @@
 <template>
   <v-app id="inspire">
     <v-navigation-drawer v-model="drawer"
+    
     app
+    color="cyan"
     >
       <!--  -->
 
       <template v-slot:prepend>
-        <v-avatar>
+        <!-- <v-avatar>
           <v-img
-            src="https://cdn.vuetifyjs.com/images/john.jpg"
+            src="/avatar.jpg"
             alt="John"
           ></v-img>
-          
-        </v-avatar>
-        <p>John</p>
+        </v-avatar> -->
+        <v-icon size="50px">mdi-account-circle</v-icon> 
+
+        <strong><p>cherif@gmail.com</p></strong>
       </template>
 
         <v-divider></v-divider>
@@ -24,7 +27,7 @@
             <nuxt-link to="/">
               
               <v-list-item-action>
-                <v-icon>mdi-home</v-icon> 
+                <v-icon size="30px">mdi-home</v-icon> 
               </v-list-item-action>
             </nuxt-link>   
            Inicio
@@ -35,15 +38,21 @@
             
             <nuxt-link to="/listatarefa">
               <v-list-item-action>
-                <v-icon>mdi-clipboard-list</v-icon>
+                <v-icon size="30px">mdi-clipboard-list</v-icon>
               </v-list-item-action>
             
             </nuxt-link>
             Lista de tarefa
           </v-list-item>
 
-          <v-list-item prepend-icon="mdi-account-group-outline" title="Users" value="users"><v-icon>mdi-account-group-outline</v-icon>  Usuario</v-list-item>
-        </v-list>
+          <v-list-item >
+              <v-icon size="30px">mdi-account-group-outline
+
+              </v-icon>  
+              Usuario
+            </v-list-item>
+
+          </v-list>
     </v-navigation-drawer>
 
     <!-- <v-app-bar app>
@@ -62,7 +71,7 @@
 
         <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-        <v-app-bar-title>Title</v-app-bar-title>
+        <v-app-bar-title>Nagumo</v-app-bar-title>
 
         <v-spacer></v-spacer>
 
@@ -84,20 +93,39 @@
           <Nuxt />
         </v-container>
     </v-main>
+   
+   
+    <!-- FOOTER -->
 
-    <v-footer class="d-flex flex-column">
+    <template>
+  <v-footer color="cyan" class="d-flex flex-column">
     <div class="bg-teal d-flex w-100 align-center px-4">
-      <strong>Get connected with us on social networks!</strong>
+      Hortifruti - Supermercado Nagumo!
 
       <v-spacer></v-spacer>
-
+      <v-icon>mdi-instagram</v-icon>
+      <v-icon>mdi-facebook</v-icon>
       
     </div>
 
     <div class="px-4 py-2 bg-black text-center w-100">
-      {{ new Date().getFullYear() }} — <strong>Sherif Panda</strong>
+        <strong>Copyright: by cherifbekopanda@gmail.com © {{ new Date().getFullYear() }}</strong>
     </div>
   </v-footer>
+</template>
+
+    <!-- <v-footer class="d-flex flex-column">
+    <div class="bg-teal d-flex w-100 align-center px-4">
+     Hortifruti Supermercado Nagumo!
+
+      <v-spacer></v-spacer>
+    </div>
+
+    <div class="px-4 py-2 bg-black text-center w-100">
+      {{ new Date().getFullYear() }} — <strong>Email: cherifbekopanda@gmail.com © 2023 <br>Copyright: by Sherif Panda</strong>
+    </div>
+  </v-footer> -->
+
   </v-app>
 </template>
 

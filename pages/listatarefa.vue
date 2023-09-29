@@ -1,41 +1,68 @@
 <template>
-  <div>
-    <h2>Criar sua lista de tarefa</h2>
-     <!-- Autocompletar para pesquisar frutas -->
-     <v-autocomplete
-      v-model="selectedFruit"
-      :items="fruits"
-      label="Pesquisar Fruta"
-      item-text="nome"
-      item-value="coditem"
-      @input="addFruitTask"
-    ></v-autocomplete> 
+  <v-row justify="center" align="center">
+    <v-col cols="12" sm="8" md="6">
 
-    
-    <v-list>
-      <v-list-item
-        v-for="(task, index) in tasks"
-        :key="index"
-        :class="{ completed: task.completed }"
-      >
-        <v-list-item-content>
-          <v-list-item-title>
-            {{ task.nome }} ({{ task.coditem }})
-          </v-list-item-title>
-        </v-list-item-content>
-        <v-list-item-action>
-          <v-btn color="lime" @click="toggleTask(index)">
-            <v-icon>{{ task.completed ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline' }}</v-icon>
-          </v-btn>
-          <v-btn color="red" @click="deleteTask(index)">
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </v-list-item-action>
-      </v-list-item>
-    </v-list>
+      <v-card flat class="logo py-4 d-flex justify-center">
+        
+        <NagumoLogo />
+      </v-card>
 
-   
-  </div>
+      <v-card flat>
+        <div>
+          <strong><h3>Adiciona tarefa</h3></strong>
+          
+                
+          <!-- Autocompletar para pesquisar frutas -->
+          <v-autocomplete
+            v-model="selectedFruit"
+            :items="fruits"
+            label="Pesquisar Fruta"
+            item-text="nome"
+            item-value="coditem"
+            @input="addFruitTask"
+          ></v-autocomplete> 
+
+          
+          <v-list>
+            <v-list-item
+              v-for="(task, index) in tasks"
+              :key="index"
+              :class="{ completed: task.completed }"
+            >
+              <v-list-item-content>
+                <v-list-item-title>
+                  {{ task.nome }} ({{ task.coditem }})
+                </v-list-item-title>
+              </v-list-item-content>
+              <v-list-item-action>
+                <v-btn color="lime" @click="toggleTask(index)">
+                  <v-icon>{{ task.completed ? 'mdi-checkbox-marked' : 'mdi-checkbox-blank-outline' }}</v-icon>
+                </v-btn>
+                <v-btn color="red" @click="deleteTask(index)">
+                  <v-icon>mdi-delete</v-icon>
+                </v-btn>
+              </v-list-item-action>
+            </v-list-item>
+          </v-list>
+
+        
+        </div>
+      </v-card>
+
+<!-- botao home -->
+      <v-card flat>
+          <v-spacer />
+          <v-btn
+            color="primary"
+            nuxt
+            to="/"
+          >
+            Volta
+          </v-btn>
+        </v-card>
+
+    </v-col>
+  </v-row>
 </template>
 
 <script>

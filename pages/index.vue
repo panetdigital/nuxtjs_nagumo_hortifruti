@@ -1,83 +1,166 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <v-card class="logo py-4 d-flex justify-center">
-        <NuxtLogo />
-        <VuetifyLogo />
+
+      <v-card flat class="logo py-4 d-flex justify-center ">
+       
+        <NagumoLogo />
       </v-card>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
+ 
+        <v-spacer />
+        
+        <div >
+          
+           <strong><p>Campo de Pesquisa:</p></strong>
+
+              <v-autocomplete
+              append-inner-icon="mdi-microphone"
+                auto-select-first
+                class="flex-full-width"
+                density="comfortable"
+                item-props
+                menu-icon=""
+                placeholder="Pesquisar Produto"
+                prepend-inner-icon="mdi-magnify"
+                rounded
+                theme="light"
+                variant="solo"
+        
+                @input="filterProducts"
+
+                v-model="selectedFruit"
+                :items="filteredFruits"
+                label="Pesquisar frutas"
+                item-text="nome"
+                @change="handleFruitSelection"
+              >
+                <template v-slot:item="{ item }">
+                  <div>{{ item.nome }} - Código: {{ item.cod }}</div>
+                </template>
+              </v-autocomplete>
+
+           
+
+              <div>
+                
+                <div v-if="searchResults.length === 0">
+                  <!-- usar campo de pesquisar. -->
+                  <br>
+                </div>
+                <div v-else>
+                  <h3>Resultados da Pesquisa:</h3>
+                  <v-table   class="result-table">
+                    <thead>
+                      <tr>
+                        <th>Código</th>
+                        <th>Nome</th>
+                        <th>Imagem</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="result in searchResults" :key="result.id">
+                        <td>{{ result.coditem }}</td>
+                        <td>{{ result.nome }}</td>
+                        <td><img :src="result.imagem" alt="Imagem do Produto" class="product-image" /></td>
+                      </tr>
+                    </tbody>
+                  </v-table>
+                </div>
+              </div>
+         </div>
+         
+          <!-- botao home -->
+
+        <v-card flat>
           <v-spacer />
           <v-btn
             color="primary"
             nuxt
-            to="/inspire"
+            to="/listatarefa"
           >
-            Continue
+            Add Tarefa
           </v-btn>
-        </v-card-actions>
-      </v-card>
+        </v-card>
+      
     </v-col>
   </v-row>
 </template>
 
 <script>
+import fruitsData from "@/assets/fruits.json"; // Importe seus dados JSON
+
 export default {
-  name: 'IndexPage'
-}
+  name: 'IndexPage',
+  data() {
+    return {
+      selectedFruit: null,
+      fruits: fruitsData,
+      searchResults: [],
+    };
+  },
+  computed: {
+    filteredFruits() {
+      if (!this.selectedFruit) {
+        return this.fruits;
+      }
+
+      return this.fruits.filter((fruit) =>
+        fruit.nome.toLowerCase().includes(this.selectedFruit.toLowerCase())
+      );
+    },
+  },
+  methods: {
+    handleFruitSelection() {
+      if (this.selectedFruit) {
+        const query = this.selectedFruit.toLowerCase();
+        this.searchResults = this.fruits.filter((fruit) =>
+          fruit.nome.toLowerCase().includes(query) ||
+          fruit.cod.toLowerCase().includes(query)
+        );
+
+        // Limpe o campo de input (autocomplete) e redefina os resultados
+        this.selectedFruit = null;
+      } else {
+        this.searchResults = [];
+      }
+    },
+  },
+};
 </script>
+
+<style>
+
+.product-info {
+  display: flex;
+  align-items: center;
+}
+
+.product-image {
+  max-width: 100px;
+  max-height: 100px;
+  margin-right: 10px;
+}
+
+.result-table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.result-table th, .result-table td {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 20px; /* aumentei para 20px era 8px */
+}
+
+.result-table th {
+  background-color: #f2f2f2;
+}
+
+</style>
+<style scoped>
+.flex-full-width {
+  background-color: rgb(190, 190, 202); /* Cor de fundo personalizada */
+  color: rgb(19, 2, 2); /* Cor do texto personalizada */
+}
+
+</style>
