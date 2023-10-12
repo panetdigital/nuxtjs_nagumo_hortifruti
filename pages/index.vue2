@@ -2,10 +2,11 @@
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
 
-      <v-card-title class="text-h6 text-md-h5 text-lg-h4">
-       <h4 style="color: green;">{{ typedText }}</h4>
-      </v-card-title>
-  
+      <v-card flat class="logo py-4 d-flex justify-center ">
+       
+        <NagumoLogo />
+      </v-card>
+ 
         <v-spacer />
         
         <div >
@@ -77,40 +78,13 @@
             nuxt
             to="/listatarefa"
           >
-           Criar Tarefa
+            Add Tarefa
           </v-btn>
         </v-card>
       
     </v-col>
   </v-row>
 </template>
-
- <!-- Efeito escrever -->
-<script setup>
-import { ref, onMounted } from 'vue';
-
-const originalText = "Bem-vindo! pesquisar produto"; // Seu texto original
-const typedText = ref('');
-const typingSpeed = 100; // Velocidade de digitação em milissegundos
-
-onMounted(() => {
-  startTyping();
-});
-
-function startTyping() {
-  let index = 0;
-  const intervalId = setInterval(() => {
-    typedText.value += originalText[index];
-    index++;
-
-    if (index === originalText.length) {
-      clearInterval(intervalId);
-    }
-  }, typingSpeed);
-}
-</script>
-<!-- Fim Efeito escrever -->
-
 
 <script>
 import fruitsData from "@/assets/fruits.json"; // Importe seus dados JSON
@@ -120,7 +94,7 @@ export default {
   data() {
     return {
       selectedFruit: null,
-      fruits: [],
+      fruits: fruitsData,
       searchResults: [],
     };
   },
@@ -136,20 +110,12 @@ export default {
     },
   },
   methods: {
-    async fetchFruitsFromApi() {
-      try {
-        const response = await fetch('http://15.228.47.247:3333/api/v1/produtos-hortifruti/'); // Substitua pela URL real
-        const data = await response.json();
-        this.fruits = data;
-      } catch (error) {
-        console.error('Erro ao buscar frutas da API:', error);
-      }
-    },
     handleFruitSelection() {
       if (this.selectedFruit) {
         const query = this.selectedFruit.toLowerCase();
         this.searchResults = this.fruits.filter((fruit) =>
-          fruit.nome.toLowerCase().includes(query) 
+          fruit.nome.toLowerCase().includes(query) ||
+          fruit.cod.toLowerCase().includes(query)
         );
 
         // Limpe o campo de input (autocomplete) e redefina os resultados
@@ -158,9 +124,6 @@ export default {
         this.searchResults = [];
       }
     },
-  },
-  created() {
-    this.fetchFruitsFromApi();
   },
 };
 </script>

@@ -8,8 +8,8 @@
 
 <style>
 .vuetify-logo {
-  height: 80px;
-  width: 80px;
+  height: 50px;
+  width: 120px;
   transform: rotateY(560deg);
   animation: turn 3.5s ease-out forwards 1s;
 }

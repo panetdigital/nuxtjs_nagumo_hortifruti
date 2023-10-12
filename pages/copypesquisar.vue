@@ -2,13 +2,13 @@
   <div>
     <v-autocomplete
       v-model="selectedFruit"
-      :items="fruits"
+      :items="filteredFruits"
       label="Pesquisar frutas"
       item-text="nome"
       @change="handleFruitSelection"
     >
       <template v-slot:item="{ item }">
-        <div>{{ item.nome }} - Código: {{ item.coditem }}</div>
+        <div>{{ item.nome }} - Código: {{ item.cod }}</div>
       </template>
     </v-autocomplete>
 
@@ -18,7 +18,7 @@
         Nenhum resultado encontrado.
       </div>
       <div v-else>
-        <v-table class="result-table">
+        <v-table   class="result-table">
           <thead>
             <tr>
               <th>Código</th>
@@ -40,30 +40,34 @@
 </template>
 
 <script>
+import fruitsData from "@/assets/fruits.json"; // Importe seus dados JSON
+
 export default {
   data() {
     return {
       selectedFruit: null,
-      fruits: [],
+      fruits: fruitsData,
       searchResults: [],
     };
   },
-  methods: {
-    async fetchFruitsFromApi() {
-      try {
-        const response = await fetch('http://15.228.47.247:3333/api/v1/produtos-hortifruti/'); // Substitua pela URL real
-        const data = await response.json();
-        this.fruits = data;
-      } catch (error) {
-        console.error('Erro ao buscar frutas da API:', error);
+  computed: {
+    filteredFruits() {
+      if (!this.selectedFruit) {
+        return this.fruits;
       }
+
+      return this.fruits.filter((fruit) =>
+        fruit.nome.toLowerCase().includes(this.selectedFruit.toLowerCase())
+      );
     },
+  },
+  methods: {
     handleFruitSelection() {
       if (this.selectedFruit) {
         const query = this.selectedFruit.toLowerCase();
         this.searchResults = this.fruits.filter((fruit) =>
           fruit.nome.toLowerCase().includes(query) ||
-          fruit.coditem.toLowerCase().includes(query)
+          fruit.cod.toLowerCase().includes(query)
         );
 
         // Limpe o campo de input (autocomplete) e redefina os resultados
@@ -72,9 +76,6 @@ export default {
         this.searchResults = [];
       }
     },
-  },
-  created() {
-    this.fetchFruitsFromApi();
   },
 };
 </script>
