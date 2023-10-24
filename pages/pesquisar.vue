@@ -51,7 +51,7 @@ export default {
   methods: {
     async fetchFruitsFromApi() {
       try {
-        const response = await fetch('http://15.228.47.247:3333/api/v1/produtos-hortifruti/'); // Substitua pela URL real
+        const response = await fetch('http://54.233.235.158/api/produtos'); // Substitua pela URL real
         const data = await response.json();
         this.fruits = data;
       } catch (error) {

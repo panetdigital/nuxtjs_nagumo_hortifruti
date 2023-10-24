@@ -57,7 +57,7 @@
     async submitForm() {
       try {
         // Enviando dados do formulário para a API Adonis.js usando Axios
-        const response = await this.$axios.post('http://15.228.47.247:3333/api/v1/produtos-hortifruti/', this.fruta);
+        const response = await this.$axios.post('http://54.233.235.158/api/produtos', this.fruta);
 
         console.log('Produto cadastrado com sucesso:', response.data);
        

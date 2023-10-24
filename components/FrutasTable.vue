@@ -93,7 +93,7 @@ export default {
         this.loading = true;
         // Faça a chamada à API para obter a lista de frutas
         // Substitua 'http://sua-api.com/frutas' pelo seu endpoint real
-        const response = await this.$axios.get('http://15.228.47.247:3333/api/v1/produtos-hortifruti/');
+        const response = await this.$axios.get('http://54.233.235.158/api/produtos');
         this.frutas = response.data;
       } catch (error) {
         console.error('Erro ao carregar frutas:', error);
@@ -136,7 +136,7 @@ cancelarEdicao() {
         }
 
         // Fazer a chamada à API para excluir o item no backend
-        await this.$axios.delete(`http://15.228.47.247:3333/api/v1/produtos-hortifruti/${item.id}`);
+        await this.$axios.delete(`http://54.233.235.158/api/produtos/${item.id}`);
         
         console.log('Fruta excluída com sucesso.');
       } catch (error) {
